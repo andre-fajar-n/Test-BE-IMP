@@ -288,7 +288,7 @@ func init() {
     "User": {
       "type": "object",
       "properties": {
-        "createdAt": {
+        "created_at": {
           "type": "integer"
         },
         "fullname": {
@@ -601,7 +601,7 @@ func init() {
     "User": {
       "type": "object",
       "properties": {
-        "createdAt": {
+        "created_at": {
           "type": "integer"
         },
         "fullname": {

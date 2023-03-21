@@ -18,7 +18,7 @@ import (
 type User struct {
 
 	// created at
-	CreatedAt int64 `json:"createdAt,omitempty"`
+	CreatedAt int64 `json:"created_at,omitempty"`
 
 	// fullname
 	Fullname string `json:"fullname,omitempty"`

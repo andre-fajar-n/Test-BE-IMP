@@ -208,5 +208,5 @@ definitions:
         type: string
       password:
         type: string
-      createdAt:
+      created_at:
         type: integer
