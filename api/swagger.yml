@@ -1,0 +1,212 @@
+swagger: "2.0"
+info:
+  title: Test BE IMP
+  version: 0.0.0
+produces: [application/json]
+consumes: [application/json]
+schemes: [http]
+securityDefinitions:
+  hasToken:
+    type: apiKey
+    in: header
+    name: Authorization
+
+paths:
+  # health
+  /health:
+    get:
+      tags: [Health]
+      summary: "Health Check"
+      description: "Check if the App is Running"
+      operationId: health
+      security: []
+      responses:
+        200:
+          description: "Health Check"
+          schema:
+            $ref: "#/definitions/Success"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: "Login User"
+      description: "Login User"
+      operationId: login
+      security: []
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            type: object
+            required: 
+              - username
+              - password
+            properties:
+              username:
+                type: string
+                minLength: 2
+              password:
+                type: string
+                minLength: 5
+      responses:
+        200:
+          description: "Success Login"
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message: 
+                type: string
+              token:
+                type: string
+              expired_at:
+                type: string
+        default:
+          description: "Request Error"
+          schema:
+            $ref: "#/definitions/Error"
+
+  /auth/signup:
+    post:
+      tags: [Auth]
+      summary: "Signup User"
+      description: "Signup User"
+      operationId: signup
+      security: []
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            type: object
+            required: 
+              - username
+              - fullname
+              - password
+            properties:
+              username:
+                type: string
+                minLength: 2
+              fullname:
+                type: string
+              password:
+                type: string
+                minLength: 5
+      responses:
+        200:
+          description: "Success Signup"
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message: 
+                type: string
+        default:
+          description: "Request Error"
+          schema:
+            $ref: "#/definitions/Error"
+
+  /user/userlist:
+    get:
+      tags: [User]
+      summary: "List User"
+      description: "List User"
+      operationId: listUser
+      security:
+        - hasToken: []
+      parameters:
+        - in: query
+          type: integer
+          name: page
+          default: 1
+        - in: query
+          type: integer
+          name: per_page
+          default: 10
+      
+      responses:
+        200:
+          description: "Success Get List User"
+          schema:
+            type: object
+            properties: 
+              message:
+                type: string
+              data:
+                type: array
+                items: 
+                  $ref: '#/definitions/User'
+              metadata:
+                $ref: '#/definitions/Metadata'
+
+        default:
+          description: "Request Error"
+          schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+        example: "error"
+
+  Success:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+
+  principal:
+    type: object
+    properties:
+      username:
+        type: string
+      user_id:
+        type: number
+        format: uint64
+      expired_at:
+        type: string
+
+  Metadata:
+    type: object
+    properties:
+      page:
+        type: integer
+        example: 1
+      per_page:
+        type: integer
+        example: 50
+      total_row:
+        type: integer
+        example: 200
+      total_page:
+        type: integer
+        example: 4
+
+  User:
+    type: object
+    properties: 
+      id:
+        type: integer
+        format: uint64
+      username:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+      createdAt:
+        type: integer

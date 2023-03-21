@@ -1,0 +1,18 @@
+app:
+  name: ${application_name}
+  port: ${application_port}
+db:
+  driver: ${database_driver}
+  host: ${database_host}
+  port: ${database_port}
+  user: ${database_user}
+  password: ${database_password}
+  db: ${database_name}
+jwt:
+  jwtSecret: ${jwt_secret}
+  jwtExp: ${jwt_exp}
+migrations:
+  migration:
+    source: "file://migrations/schema/"
+  seed:
+    source: "file://migrations/seed/"
