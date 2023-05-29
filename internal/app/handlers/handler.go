@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"test-be-IMP/gen/restapi/operations/auth"
+	"test-be-IMP/gen/restapi/operations/coolection"
 	"test-be-IMP/gen/restapi/operations/user"
 
 	"gorm.io/gorm"
@@ -12,6 +13,7 @@ type (
 	Handler interface {
 		IAuth
 		IUser
+		ICollection
 	}
 
 	IAuth interface {
@@ -21,6 +23,10 @@ type (
 
 	IUser interface {
 		GetListUserWithPagination(ctx context.Context, params user.ListUserParams) (*user.ListUserOKBody, error)
+	}
+
+	ICollection interface {
+		GetListCollections(ctx context.Context) (*coolection.ListCollectionOK, error)
 	}
 )
 

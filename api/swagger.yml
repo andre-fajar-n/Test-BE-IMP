@@ -151,6 +151,33 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+  /collections:
+    get:
+      tags: [Coolection]
+      summary: "List Collection"
+      description: "List Collection"
+      operationId: listCollection
+      security:
+        - hasToken: []
+      
+      responses:
+        200:
+          description: "Success Get List Collections"
+          schema:
+            type: array
+            items: 
+              type: object
+              properties: 
+                title:
+                  type: string
+                thumbnail: 
+                  type: string
+
+        default:
+          description: "Request Error"
+          schema:
+            $ref: "#/definitions/Error"
+
 definitions:
   Error:
     type: object

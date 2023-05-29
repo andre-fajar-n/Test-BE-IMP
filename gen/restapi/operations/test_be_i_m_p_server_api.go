@@ -21,6 +21,7 @@ import (
 
 	"test-be-IMP/gen/models"
 	"test-be-IMP/gen/restapi/operations/auth"
+	"test-be-IMP/gen/restapi/operations/coolection"
 	"test-be-IMP/gen/restapi/operations/health"
 	"test-be-IMP/gen/restapi/operations/user"
 )
@@ -49,6 +50,9 @@ func NewTestBeIMPServerAPI(spec *loads.Document) *TestBeIMPServerAPI {
 
 		HealthHealthHandler: health.HealthHandlerFunc(func(params health.HealthParams) middleware.Responder {
 			return middleware.NotImplemented("operation health.Health has not yet been implemented")
+		}),
+		CoolectionListCollectionHandler: coolection.ListCollectionHandlerFunc(func(params coolection.ListCollectionParams, principal *models.Principal) middleware.Responder {
+			return middleware.NotImplemented("operation coolection.ListCollection has not yet been implemented")
 		}),
 		UserListUserHandler: user.ListUserHandlerFunc(func(params user.ListUserParams, principal *models.Principal) middleware.Responder {
 			return middleware.NotImplemented("operation user.ListUser has not yet been implemented")
@@ -111,6 +115,8 @@ type TestBeIMPServerAPI struct {
 
 	// HealthHealthHandler sets the operation handler for the health operation
 	HealthHealthHandler health.HealthHandler
+	// CoolectionListCollectionHandler sets the operation handler for the list collection operation
+	CoolectionListCollectionHandler coolection.ListCollectionHandler
 	// UserListUserHandler sets the operation handler for the list user operation
 	UserListUserHandler user.ListUserHandler
 	// AuthLoginHandler sets the operation handler for the login operation
@@ -200,6 +206,9 @@ func (o *TestBeIMPServerAPI) Validate() error {
 
 	if o.HealthHealthHandler == nil {
 		unregistered = append(unregistered, "health.HealthHandler")
+	}
+	if o.CoolectionListCollectionHandler == nil {
+		unregistered = append(unregistered, "coolection.ListCollectionHandler")
 	}
 	if o.UserListUserHandler == nil {
 		unregistered = append(unregistered, "user.ListUserHandler")
@@ -313,6 +322,10 @@ func (o *TestBeIMPServerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/health"] = health.NewHealth(o.context, o.HealthHealthHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/collections"] = coolection.NewListCollection(o.context, o.CoolectionListCollectionHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

@@ -7,6 +7,7 @@ import (
 	"test-be-IMP/gen/models"
 	"test-be-IMP/gen/restapi/operations"
 	"test-be-IMP/gen/restapi/operations/auth"
+	"test-be-IMP/gen/restapi/operations/coolection"
 	"test-be-IMP/gen/restapi/operations/health"
 	"test-be-IMP/gen/restapi/operations/user"
 	"test-be-IMP/internal/app/handlers"
@@ -72,5 +73,18 @@ func Route(api *operations.TestBeIMPServerAPI, handler handlers.Handler) {
 		}
 
 		return user.NewListUserOK().WithPayload(resp)
+	})
+
+	api.CoolectionListCollectionHandler = coolection.ListCollectionHandlerFunc(func(lcp coolection.ListCollectionParams, p *models.Principal) middleware.Responder {
+		resp, err := handler.GetListCollections(context.Background())
+		if err != nil {
+			errRes := errors.GetError(err)
+			return coolection.NewListCollectionDefault(int(errRes.Code())).WithPayload(&models.Error{
+				Code:    int64(errRes.Code()),
+				Message: errRes.Error(),
+			})
+		}
+
+		return coolection.NewListCollectionOK().WithPayload(resp.Payload)
 	})
 }

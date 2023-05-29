@@ -157,6 +157,46 @@ func init() {
         }
       }
     },
+    "/collections": {
+      "get": {
+        "security": [
+          {
+            "hasToken": []
+          }
+        ],
+        "description": "List Collection",
+        "tags": [
+          "Coolection"
+        ],
+        "summary": "List Collection",
+        "operationId": "listCollection",
+        "responses": {
+          "200": {
+            "description": "Success Get List Collections",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "security": [],
@@ -470,6 +510,38 @@ func init() {
         }
       }
     },
+    "/collections": {
+      "get": {
+        "security": [
+          {
+            "hasToken": []
+          }
+        ],
+        "description": "List Collection",
+        "tags": [
+          "Coolection"
+        ],
+        "summary": "List Collection",
+        "operationId": "listCollection",
+        "responses": {
+          "200": {
+            "description": "Success Get List Collections",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ListCollectionOKBodyItems0"
+              }
+            }
+          },
+          "default": {
+            "description": "Request Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "security": [],
@@ -563,6 +635,17 @@ func init() {
         "message": {
           "type": "string",
           "example": "error"
+        }
+      }
+    },
+    "ListCollectionOKBodyItems0": {
+      "type": "object",
+      "properties": {
+        "thumbnail": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
         }
       }
     },

@@ -1,0 +1,61 @@
+swagger: "2.0"
+info:
+  title: Test BE IMP
+  version: 0.0.0
+produces: [application/json]
+consumes: [application/json]
+schemes: [http]
+basePath: /index.php/api
+
+paths:
+  /catalog/collections:
+    get:
+      responses:
+        200:
+          description: success get data
+          schema:
+            type: object
+            properties: 
+              status:
+                type: string
+              total:
+                type: integer
+              collections:
+                type: array
+                items: 
+                  type: object
+                  properties: 
+                    id:
+                      type: integer
+                    repositoryid:
+                      type: string
+                    title:
+                      type: string
+                    thumbnail:
+                      type: string
+                    short_text:
+                      type: string
+                    long_text:
+                      type: string
+        default:
+          description: "Request Error"
+          schema:
+            $ref: "#/definitions/Error"
+  
+definitions:
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+        example: "error"
+
+  Success:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
